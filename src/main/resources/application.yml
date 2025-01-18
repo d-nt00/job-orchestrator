@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: job-orchestrator
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/job-orchestrator
+    username: postgres
+    password: root

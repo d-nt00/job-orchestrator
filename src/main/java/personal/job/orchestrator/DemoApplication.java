@@ -1,4 +1,4 @@
-package com.example.job_orchestrator;
+package personal.job.orchestrator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
