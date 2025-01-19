@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.avast.gradle.docker-compose' version '0.16.12'
 }
 
 group = 'personal.job.orchestrator'
@@ -37,26 +38,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.register('dockerComposeUp', Exec) {
-	group = 'Docker'
-	description = 'Start docker local'
-	commandLine 'docker-compose', 'up', 'd'
-}
-
-tasks.register('dockerComposeDown', Exec) {
-	group = 'Docker'
-	description = 'Stop Docker Compose services'
-	commandLine 'docker-compose', 'down'
-}
-
-tasks.register('bootRunLocal') {
-	group = 'Application'
-	description = 'Run application locally with docker'
-	dependsOn 'dockerComposeUp', 'bootRun'
-	finalizedBy 'dockerComposeDown'
-
-	doFirst {
-		tasks.bootRun.systemProperty 'spring.profiles.active', 'local'
-	}
+tasks.bootRun {
+	systemProperty 'spring.profiles.active', 'local'
 }
 
