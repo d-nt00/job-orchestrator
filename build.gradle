@@ -2,14 +2,15 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.avast.gradle.docker-compose' version '0.16.12'
 }
 
-group = 'com.example'
+group = 'personal.job.orchestrator'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -18,7 +19,17 @@ repositories {
 }
 
 dependencies {
+	// spring eco
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux' // For REST APIs with reactive support
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc' // For R2DBC
+	implementation 'org.postgresql:r2dbc-postgresql:1.0.7.RELEASE'
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -26,3 +37,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.bootRun {
+	systemProperty 'spring.profiles.active', 'local'
+}
+
