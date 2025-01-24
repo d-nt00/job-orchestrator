@@ -21,6 +21,21 @@ services:
     networks:
       - app-network
 
+  flyway:
+    image: flyway/flyway:9.22.0
+    container_name: flyway
+    depends_on:
+      - postgres
+    entrypoint: [
+      "flyway",
+      "-url=jdbc:postgresql://postgres:5432/job_orchestrator",
+      "-user=postgres",
+      "-password=root",
+      "migrate"
+    ]
+    volumes:
+      - ./migrations:/flyway/sql
+
 volumes:
   postgres-data: # Named volume for PostgreSQL data persistence
 
