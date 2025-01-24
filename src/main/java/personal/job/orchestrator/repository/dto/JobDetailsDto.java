@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseJobDetailsDto {
+public abstract class JobDetailsDto {
     private String eventName;
 }

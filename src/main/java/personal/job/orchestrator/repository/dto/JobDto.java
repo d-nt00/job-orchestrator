@@ -7,5 +7,5 @@ import java.time.OffsetDateTime;
 public record JobDto(String jobId,
                      JobStatus status,
                      OffsetDateTime scheduledTime,
-                     BaseJobDetailsDto jobDetailsDto) {
+                     JobDetailsDto jobDetailsDto) {
 }

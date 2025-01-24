@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class NotificationTriggeredJobDetailsDto extends BaseJobDetailsDto {
+public class NotificationTriggeredJobDetailsDto extends JobDetailsDto {
 
     private String notificationSystemId;
 }
