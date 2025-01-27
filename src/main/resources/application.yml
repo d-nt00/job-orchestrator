@@ -5,3 +5,9 @@ logging:
 spring:
   application:
     name: job-orchestrator
+  conversion:
+    # to be replaced with external path when moving to common library
+    deserializers:
+      - personal.job.orchestrator.mapper.JobDetailsDeserializer
+    serializers:
+      - personal.job.orchestrator.mapper.JobDetailsSerializer
