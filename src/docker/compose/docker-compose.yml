@@ -1,0 +1,38 @@
+services:
+  postgres-db:
+    image: postgres:15 # Use the desired PostgreSQL version
+    container_name: postgres-db
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "dev_profile" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - docker-pgsql-local.env
+    volumes:
+      - ../db-init:/docker-entrypoint-initdb.d/
+
+  redis:
+    image: redis:7 # Use the desired Redis version
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  flyway:
+    image: flyway/flyway:9.22.0
+    container_name: flyway
+    command: migrate
+      -configFiles=/flyway/conf/flyway.config
+      -locations=filesystem:/flyway/sql
+      -connectRetries=60
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    volumes:
+      - ../migrations/sql:/flyway/sql
+      - ./docker-flyway.conf:/flyway/conf/flyway.config
+
+volumes:
+  postgres-data: # Named volume for PostgreSQL data persistence
