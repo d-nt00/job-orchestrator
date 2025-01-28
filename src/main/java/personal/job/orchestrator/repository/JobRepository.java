@@ -12,8 +12,8 @@ import personal.job.orchestrator.repository.dto.JobDto;
 import reactor.core.publisher.Mono;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
-import static org.springframework.data.relational.core.query.Criteria.where;
 import static org.springframework.data.relational.core.query.Update.update;
 
 @Repository
@@ -34,23 +34,23 @@ public class JobRepository {
         private final String name;
     }
 
-    private Query onColumn(JobColumn column, String expected) {
+    private Query onColumn(JobColumn column, UUID expected) {
         return Query.query(Criteria.where(column.getName()).is(expected));
     }
 
-    public Mono<JobDto> findJob(String jobId) {
+    public Mono<JobDto> findJob(UUID jobId) {
         return r2dbcEntityTemplate.select(JobDto.class)
                 .matching(onColumn(JobColumn.JOB_ID, jobId))
                 .one();
     }
 
-    public Mono<Boolean> exists(String jobId) {
+    public Mono<Boolean> exists(UUID jobId) {
         return r2dbcEntityTemplate.select(JobDto.class)
                 .matching(onColumn(JobColumn.JOB_ID, jobId))
                 .exists();
     }
 
-    public Mono<Long> updateJobScheduledTime(String jobId, OffsetDateTime newScheduledTime) {
+    public Mono<Long> updateJobScheduledTime(UUID jobId, OffsetDateTime newScheduledTime) {
         return r2dbcEntityTemplate.update(JobDto.class)
                 .matching(onColumn(JobColumn.JOB_ID, jobId))
                 .apply(update(JobColumn.SCHEDULED_TIME.getName(), newScheduledTime));
