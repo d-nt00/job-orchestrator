@@ -5,7 +5,9 @@ import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import personal.job.orchestrator.config.properties.ConversionProperties;
+import personal.job.orchestrator.repository.dto.JobDetailsDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,17 @@ public class ConversionConfig {
         return adapters;
     }
 
+    @Bean
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+        ObjectMapper objectMapper = builder.build();
+        objectMapper.addMixIn(JobDetailsDto.class, JobDetailsDtoMixin.class);
+
+        return objectMapper;
+    }
+
     @SneakyThrows
     private Object instantiate(Class<?> targetClass, Object... args) {
-        return targetClass.getDeclaredConstructor().newInstance(args);
+        return targetClass.getDeclaredConstructor(args[0].getClass()).newInstance(args);
     }
 
     private List<Object> toInstancesFromClasses(List<Class<? extends Converter<?, ?>>> classes, Object... args) {
