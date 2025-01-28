@@ -1,5 +1,7 @@
 package personal.job.orchestrator.config;
 
+import io.r2dbc.spi.ConnectionFactory;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,13 +13,18 @@ import java.util.List;
 @Configuration
 @EnableConfigurationProperties
 @RequiredArgsConstructor
-public abstract class R2dbcConfig extends AbstractR2dbcConfiguration {
+public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
     @Qualifier("r2dbcAdapter")
     private final List<Object> adapters;
 
     @Override
-    protected List<Object> getCustomConverters() {
+    public ConnectionFactory connectionFactory() {
+        return null;
+    }
+
+    @Override
+    protected @NonNull List<Object> getCustomConverters() {
         return adapters;
     }
 }
