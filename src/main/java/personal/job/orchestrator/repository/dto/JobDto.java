@@ -1,11 +1,14 @@
 package personal.job.orchestrator.repository.dto;
 
+import org.springframework.data.relational.core.mapping.Table;
 import personal.job.orchestrator.common.enums.JobStatus;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
-public record JobDto(String jobId,
+@Table("scheduling")
+public record JobDto(UUID jobId,
                      JobStatus status,
-                     OffsetDateTime scheduledTime,
-                     JobDetailsDto jobDetailsDto) {
+                     LocalDateTime scheduledTime,
+                     JobDetailsDto jobDetails) {
 }
