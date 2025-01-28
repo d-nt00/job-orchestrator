@@ -3,13 +3,13 @@ package personal.job.orchestrator.mapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.r2dbc.postgresql.codec.Json;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import personal.job.orchestrator.exception.ServiceException;
 
 import static personal.job.orchestrator.common.enums.CommonErrorMessages.JSON_PARSING_ERROR;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public abstract class BaseJsonTypeDeserializer<T> implements Converter<Json, T> {
 
     protected final ObjectMapper objectMapper;

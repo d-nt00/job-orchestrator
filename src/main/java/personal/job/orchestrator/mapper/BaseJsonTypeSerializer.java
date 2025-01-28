@@ -12,7 +12,7 @@ import static personal.job.orchestrator.common.enums.CommonErrorMessages.JSON_PA
 @RequiredArgsConstructor
 public abstract class BaseJsonTypeSerializer<F> implements Converter<F, Json> {
 
-    private final ObjectMapper objectMapper;
+    protected final ObjectMapper objectMapper;
 
     @Override
     public Json convert(F source) {
