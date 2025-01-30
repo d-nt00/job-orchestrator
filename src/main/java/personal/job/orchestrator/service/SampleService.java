@@ -12,9 +12,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SampleService {
 
-    private final JobRepository jobRepository;
+  private final JobRepository jobRepository;
 
-    public Mono<JobDto> getFirstJob() {
-        return jobRepository.findById(UUID.fromString("baba4406-2194-4dac-ac41-1ea2c3fa5676"));
-    }
+  public Mono<JobDto> getFirstJob() {
+    return jobRepository.findById(UUID.fromString("baba4406-2194-4dac-ac41-1ea2c3fa5676"));
+  }
 }

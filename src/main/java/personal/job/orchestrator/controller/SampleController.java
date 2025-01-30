@@ -12,12 +12,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class SampleController {
 
-    private final SampleService sampleService;
+  private final SampleService sampleService;
 
-    @GetMapping("/fetch")
-    public Mono<ResponseEntity<JobDto>> getJob() {
-        return sampleService.getFirstJob()
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
-    }
+  @GetMapping("/fetch")
+  public Mono<ResponseEntity<JobDto>> getJob() {
+    return sampleService.getFirstJob()
+        .map(ResponseEntity::ok)
+        .defaultIfEmpty(ResponseEntity.notFound().build());
+  }
 }

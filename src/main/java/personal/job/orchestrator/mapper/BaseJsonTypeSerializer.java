@@ -12,16 +12,16 @@ import static personal.job.orchestrator.common.enums.CommonErrorMessages.JSON_PA
 @RequiredArgsConstructor
 public abstract class BaseJsonTypeSerializer<F> implements Converter<F, Json> {
 
-    protected final ObjectMapper objectMapper;
+  protected final ObjectMapper objectMapper;
 
-    @Override
-    public Json convert(F source) {
-        try {
-            String rawJsonString = objectMapper.writer().withDefaultPrettyPrinter()
-                    .writeValueAsString(source);
-            return Json.of(rawJsonString);
-        } catch (JsonProcessingException e) {
-            throw new ServiceException(JSON_PARSING_ERROR, e);
-        }
+  @Override
+  public Json convert(F source) {
+    try {
+      String rawJsonString = objectMapper.writer().withDefaultPrettyPrinter()
+          .writeValueAsString(source);
+      return Json.of(rawJsonString);
+    } catch (JsonProcessingException e) {
+      throw new ServiceException(JSON_PARSING_ERROR, e);
     }
+  }
 }

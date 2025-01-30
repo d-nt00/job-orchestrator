@@ -13,6 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 public class ConversionProperties {
-    private List<Class<? extends Converter<?, ?>>> serializers;
-    private List<Class<? extends Converter<?, ?>>> deserializers;
+  private List<Class<? extends Converter<?, ?>>> serializers;
+  private List<Class<? extends Converter<?, ?>>> deserializers;
 }

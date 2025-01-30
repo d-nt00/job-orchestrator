@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class JobDetailsDto {
-    private String eventName;
+  private String eventName;
 }

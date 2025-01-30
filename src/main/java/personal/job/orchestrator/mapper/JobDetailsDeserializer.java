@@ -6,7 +6,7 @@ import personal.job.orchestrator.repository.dto.JobDetailsDto;
 
 @ReadingConverter
 public class JobDetailsDeserializer extends BaseJsonTypeDeserializer<JobDetailsDto> {
-    public JobDetailsDeserializer(ObjectMapper objectMapper) {
-        super(objectMapper, JobDetailsDto.class);
-    }
+  public JobDetailsDeserializer(ObjectMapper objectMapper) {
+    super(objectMapper, JobDetailsDto.class);
+  }
 }

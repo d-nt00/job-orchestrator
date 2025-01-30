@@ -15,16 +15,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
-    @Qualifier("r2dbcAdapter")
-    private final List<Object> adapters;
+  @Qualifier("r2dbcAdapter")
+  private final List<Object> adapters;
 
-    @Override
-    public ConnectionFactory connectionFactory() {
-        return null;
-    }
+  @Override
+  public ConnectionFactory connectionFactory() {
+    return null;
+  }
 
-    @Override
-    protected @NonNull List<Object> getCustomConverters() {
-        return adapters;
-    }
+  @Override
+  protected @NonNull List<Object> getCustomConverters() {
+    return adapters;
+  }
 }

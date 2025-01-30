@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import personal.job.orchestrator.repository.dto.NotificationTriggeredJobDetailsDto;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "eventName",
-        visible = true)
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.EXISTING_PROPERTY,
+    property = "eventName",
+    visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = NotificationTriggeredJobDetailsDto.class, name = "notification-triggered-system")
+    @JsonSubTypes.Type(value = NotificationTriggeredJobDetailsDto.class, name = "notification-triggered-system")
 })
 public abstract class JobDetailsDtoMixin {
 }

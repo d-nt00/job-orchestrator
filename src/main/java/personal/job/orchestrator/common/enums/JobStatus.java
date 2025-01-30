@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum JobStatus {
-    NEW("new"),
-    PROCESSING("processing"),
-    COMPLETED("completed"),
-    CANCELED("canceled");
+  NEW("new"),
+  PROCESSING("processing"),
+  COMPLETED("completed"),
+  CANCELED("canceled");
 
-    private final String value;
+  private final String value;
 }

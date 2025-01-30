@@ -6,7 +6,7 @@ import personal.job.orchestrator.repository.dto.JobDetailsDto;
 
 @WritingConverter
 public class JobDetailsSerializer extends BaseJsonTypeSerializer<JobDetailsDto> {
-    public JobDetailsSerializer(ObjectMapper objectMapper) {
-        super(objectMapper);
-    }
+  public JobDetailsSerializer(ObjectMapper objectMapper) {
+    super(objectMapper);
+  }
 }

@@ -15,35 +15,35 @@ import java.util.List;
 @Configuration
 public class ConversionConfig {
 
-    @Bean(name = "r2dbcAdapter")
-    public List<Object> r2dbcTypeAdapter(ConversionProperties conversionProperties, ObjectMapper objectMapper) {
-        List<Class<? extends Converter<?, ?>>> serializers = conversionProperties.getSerializers();
-        List<Class<? extends Converter<?, ?>>> deserializers = conversionProperties.getDeserializers();
+  @Bean(name = "r2dbcAdapter")
+  public List<Object> r2dbcTypeAdapter(ConversionProperties conversionProperties, ObjectMapper objectMapper) {
+    List<Class<? extends Converter<?, ?>>> serializers = conversionProperties.getSerializers();
+    List<Class<? extends Converter<?, ?>>> deserializers = conversionProperties.getDeserializers();
 
-        List<Object> adapters = new ArrayList<>();
-        adapters.addAll(toInstancesFromClasses(serializers, objectMapper));
-        adapters.addAll(toInstancesFromClasses(deserializers, objectMapper));
+    List<Object> adapters = new ArrayList<>();
+    adapters.addAll(toInstancesFromClasses(serializers, objectMapper));
+    adapters.addAll(toInstancesFromClasses(deserializers, objectMapper));
 
 
-        return adapters;
-    }
+    return adapters;
+  }
 
-    @Bean
-    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper objectMapper = builder.build();
-        objectMapper.addMixIn(JobDetailsDto.class, JobDetailsDtoMixin.class);
+  @Bean
+  public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+    ObjectMapper objectMapper = builder.build();
+    objectMapper.addMixIn(JobDetailsDto.class, JobDetailsDtoMixin.class);
 
-        return objectMapper;
-    }
+    return objectMapper;
+  }
 
-    @SneakyThrows
-    private Object instantiate(Class<?> targetClass, Object... args) {
-        return targetClass.getDeclaredConstructor(args[0].getClass()).newInstance(args);
-    }
+  @SneakyThrows
+  private Object instantiate(Class<?> targetClass, Object... args) {
+    return targetClass.getDeclaredConstructor(args[0].getClass()).newInstance(args);
+  }
 
-    private List<Object> toInstancesFromClasses(List<Class<? extends Converter<?, ?>>> classes, Object... args) {
-        return classes.stream()
-                .map(clazz -> instantiate(clazz, args))
-                .toList();
-    }
+  private List<Object> toInstancesFromClasses(List<Class<? extends Converter<?, ?>>> classes, Object... args) {
+    return classes.stream()
+        .map(clazz -> instantiate(clazz, args))
+        .toList();
+  }
 }
