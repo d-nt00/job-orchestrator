@@ -15,6 +15,6 @@ public class SampleService {
     private final JobRepository jobRepository;
 
     public Mono<JobDto> getFirstJob() {
-        return jobRepository.findJob(UUID.fromString("baba4406-2194-4dac-ac41-1ea2c3fa5676"));
+        return jobRepository.findById(UUID.fromString("baba4406-2194-4dac-ac41-1ea2c3fa5676"));
     }
 }
