@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Table("scheduling")
 public record JobDto(UUID jobId,
-                     JobStatus status,
+                     JobStatus jobStatus,
                      LocalDateTime scheduledTime,
                      JobDetailsDto jobDetails) {
 }
