@@ -1,5 +1,5 @@
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/job-orchestrator
-    username: postgres
+    url: r2dbc:postgresql://localhost:5433/schedule_job
+    username: dev_profile
     password: root

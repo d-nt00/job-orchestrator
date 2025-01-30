@@ -23,6 +23,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux' // For REST APIs with reactive support
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc' // For R2DBC
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 	implementation 'org.postgresql:r2dbc-postgresql:1.0.7.RELEASE'
 
 	// lombok

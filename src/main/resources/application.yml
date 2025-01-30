@@ -1,7 +1,15 @@
 logging:
   level:
     root: info
+#    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+#    io.r2dbc.postgresql.PARAM: DEBUG # for parameters
 
 spring:
   application:
     name: job-orchestrator
+  conversion:
+    # to be replaced with external path when moving to common library
+    deserializers:
+      - personal.job.orchestrator.mapper.JobDetailsDeserializer
+    serializers:
+      - personal.job.orchestrator.mapper.JobDetailsSerializer
