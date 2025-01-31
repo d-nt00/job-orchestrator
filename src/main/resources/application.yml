@@ -10,6 +10,6 @@ spring:
   conversion:
     # to be replaced with external path when moving to common library
     deserializers:
-      - personal.job.orchestrator.mapper.JobDetailsDeserializer
+      - personal.job.orchestrator.mapper.json.JobDetailsDeserializer
     serializers:
-      - personal.job.orchestrator.mapper.JobDetailsSerializer
+      - personal.job.orchestrator.mapper.json.JobDetailsSerializer
