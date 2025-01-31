@@ -1,10 +1,14 @@
 package personal.job.orchestrator.repository.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public abstract class JobDetailsDto {
   private String eventName;
 }

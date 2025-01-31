@@ -32,10 +32,21 @@ public abstract class BaseReactiveRepository<K, E, C extends Enum<C> & ColumnIde
         .one();
   }
 
-  public Mono<Boolean> exists(K id) {
+  public Mono<Boolean> existsById(K id) {
     return r2dbcEntityTemplate.select(entityClass)
         .matching(onColumn(primaryKey, id))
         .exists();
+  }
+
+  public Mono<Long> deleteById(K id) {
+    return r2dbcEntityTemplate.delete(entityClass)
+        .matching(onColumn(primaryKey, id))
+        .all();
+  }
+
+  public Mono<E> save(E entity) {
+    return r2dbcEntityTemplate.insert(entityClass)
+        .using(entity);
   }
 
   public Flux<E> findBy(C column, Object value) {

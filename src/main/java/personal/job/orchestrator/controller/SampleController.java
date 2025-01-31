@@ -20,4 +20,11 @@ public class SampleController {
         .map(ResponseEntity::ok)
         .defaultIfEmpty(ResponseEntity.notFound().build());
   }
+
+  @GetMapping("/insert")
+  public Mono<ResponseEntity<JobDto>> insertJob() {
+    return sampleService.insertJob()
+        .map(ResponseEntity::ok)
+        .defaultIfEmpty(ResponseEntity.notFound().build());
+  }
 }
