@@ -1,4 +1,4 @@
-package personal.job.orchestrator.mapper;
+package personal.job.orchestrator.mapper.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.convert.ReadingConverter;
