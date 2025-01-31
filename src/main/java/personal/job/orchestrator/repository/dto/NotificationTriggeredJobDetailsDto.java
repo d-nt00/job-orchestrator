@@ -2,13 +2,13 @@ package personal.job.orchestrator.repository.dto;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@Getter
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 public class NotificationTriggeredJobDetailsDto extends JobDetailsDto {
 
-  private final String notificationSystemId;
+  private String notificationSystemId;
 }
