@@ -1,24 +1,57 @@
 package personal.job.orchestrator.common.validator;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import personal.job.orchestrator.repository.ColumnIdentity;
+import org.aspectj.lang.reflect.MethodSignature;
+import personal.job.orchestrator.common.annotations.IsAssignableType;
+
+import java.lang.reflect.Parameter;
+import java.util.stream.IntStream;
 
 @Aspect
 public class ObjectTypeValidatorAspect {
 
-  @Before("@annotation(personal.job.orchestrator.common.annotations.ValidateObject)")
-  public void isOfType(JoinPoint joinPoint) {
-    ColumnIdentity column = (ColumnIdentity) joinPoint.getArgs()[0];
-    Object newValue = joinPoint.getArgs()[2];
+  private IllegalArgumentException throwArgNotFound(String argName) {
+    return new IllegalArgumentException("Argument %s not found".formatted(argName));
+  }
 
-    Class<?> columnType = column.getType();
+  @Before("@annotation(isAssignable)")
+  public void isAssignable(JoinPoint joinPoint, IsAssignableType isAssignable) {
+    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 
-    if (newValue != null && !columnType.isAssignableFrom(newValue.getClass())) {
-      throw new IllegalArgumentException("Invalid type for column '" + column.getName() +
-          "'. Expected: " + columnType.getSimpleName() +
-          ", but got: " + newValue.getClass().getSimpleName());
+    String wantedArg = isAssignable.arg();
+
+    int wantedTypeIndex = getWantedArgumentIndex(methodSignature, wantedArg);
+    int annotatedIndex = getAnnotatedArgumentIndex(methodSignature, wantedArg);
+
+    Class<?> wantedType = methodSignature.getParameterTypes()[wantedTypeIndex];
+    Object target = joinPoint.getArgs()[annotatedIndex];
+
+    if (target != null && !ClassUtils.isAssignable(target.getClass(), wantedType)) {
+      throw new IllegalArgumentException(
+          "Expected: " + wantedType.getSimpleName() +
+          ", but got: " + target.getClass().getSimpleName());
     }
+  }
+
+  private int getAnnotatedArgumentIndex(MethodSignature methodSignature, String wantedArgName) {
+    Parameter[] parameters = methodSignature.getMethod().getParameters();
+
+    return IntStream.range(0, parameters.length)
+        .filter(i -> parameters[i].isAnnotationPresent(IsAssignableType.class)
+            && parameters[i].getAnnotation(IsAssignableType.class).arg().equals(wantedArgName))
+        .findFirst()
+        .orElseThrow(() -> throwArgNotFound(wantedArgName));
+  }
+
+  private int getWantedArgumentIndex(MethodSignature methodSignature, String wantedArgName) {
+    String[] argNames = methodSignature.getParameterNames();
+
+    return IntStream.range(0, argNames.length)
+        .filter(i -> argNames[i].equals(wantedArgName))
+        .findFirst()
+        .orElseThrow(() -> throwArgNotFound(wantedArgName));
   }
 }
