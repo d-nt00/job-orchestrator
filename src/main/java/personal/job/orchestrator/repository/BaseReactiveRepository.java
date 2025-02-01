@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.data.relational.core.query.Update;
 import org.springframework.stereotype.Component;
-import personal.job.orchestrator.common.annotations.ValidateObject;
+import personal.job.orchestrator.common.annotations.IsAssignableType;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -22,7 +22,7 @@ public abstract class BaseReactiveRepository<K, E, C extends Enum<C> & ColumnIde
 
   protected C primaryKey;
 
-  private Query onColumn(C column, @ValidateObject Object expected) {
+  private Query onColumn(C column, @IsAssignableType(arg = "column") Object expected) {
     return Query.query(Criteria.where(column.getName()).is(expected));
   }
 
@@ -57,7 +57,7 @@ public abstract class BaseReactiveRepository<K, E, C extends Enum<C> & ColumnIde
 
   public Mono<Long> updateOn(C column,
                              Object condition,
-                             @ValidateObject Object newValue) {
+                             @IsAssignableType(arg = "column") Object newValue) {
     String columnName = column.getName();
 
     return r2dbcEntityTemplate.update(entityClass)
