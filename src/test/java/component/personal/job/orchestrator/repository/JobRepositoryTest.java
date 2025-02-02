@@ -59,6 +59,9 @@ public class JobRepositoryTest {
           assertNotNull(foundJob);
           assertNotNull(foundJob.jobId());
           assertEquals(dummyJob.jobStatus(), foundJob.jobStatus());
+          System.out.println(dummyJob.scheduledTime());
+          System.out.println(foundJob.scheduledTime());
+
           assertEquals(dummyJob.scheduledTime(), foundJob.scheduledTime());
           assertThat(dummyJob.jobDetails()).usingRecursiveComparison().isEqualTo(foundJob.jobDetails());
         })
