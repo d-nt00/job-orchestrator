@@ -1,3 +1,5 @@
+import java.time.Duration
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
@@ -52,6 +54,6 @@ tasks.bootRun {
 dockerCompose {
 	useComposeFiles = ["src/docker/compose/docker-compose.yml"]
 	waitForTcpPorts = true
-	waitForTcpPortsTimeout = 120000
+	waitForTcpPortsTimeout = Duration.ofSeconds(120)
 }
 
