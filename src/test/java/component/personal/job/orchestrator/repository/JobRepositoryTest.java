@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.r2dbc.connection.init.ScriptUtils;
-import org.springframework.test.context.jdbc.Sql;
 import personal.job.orchestrator.repository.JobRepository;
 import personal.job.orchestrator.repository.dto.JobDto;
 import reactor.core.publisher.Mono;
@@ -18,9 +17,9 @@ import static fixture.personal.job.orchestrator.JobFixtures.getDummyJobDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ComponentTest
-@Sql
 public class JobRepositoryTest {
 
   @Autowired
@@ -61,14 +60,9 @@ public class JobRepositoryTest {
           assertNotNull(foundJob);
           assertNotNull(foundJob.jobId());
           assertEquals(dummyJob.jobStatus(), foundJob.jobStatus());
-          assertEquals(dummyJob.scheduledTime(), foundJob.scheduledTime());
+          assertEquals(dummyJob.scheduledTime().toString(), foundJob.scheduledTime().toString());
           assertThat(dummyJob.jobDetails()).usingRecursiveComparison().isEqualTo(foundJob.jobDetails());
         })
         .verifyComplete();
-  }
-
-  @Test
-  public void givenJobDto_whenUpdate_thenUpdate() {
-
   }
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class JobFixtures {
   public static JobDto getDummyJobDto() {
     return JobDto.builder()
-        .scheduledTime(LocalDateTime.now())
+        .scheduledTime(LocalDateTime.of(2020, 1, 1, 0, 0))
         .jobStatus(JobStatus.COMPLETED)
         .jobDetails(NotificationTriggeredJobDetailsDto.builder().eventName(EventName.NOTIFICATION_TRIGGERED_SYSTEM.getValue()).build())
         .build();

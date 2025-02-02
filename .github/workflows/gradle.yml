@@ -1,0 +1,62 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feature/*'
+      - 'fix/*'
+  pull_request:
+    branches:
+      - 'main'
+      - 'feature/*'
+      - 'fix/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Clean environment
+        run: ./gradlew clean
+
+      - name: Start Docker
+        run: ./gradlew composeUp
+
+      - name: Compile
+        run: ./gradlew compileJava
+
+      - name: Run PMD
+        run: ./gradlew pmdMain
+
+# TODO: to re-activate once gradle supports built-in rules
+#      - name: Run Checkstyle
+#        run: ./gradlew checkstyleMain
+
+      - name: Close Docker container
+        if: always()
+        run: ./gradlew composeDown
+
+      - name: Upload Checkstyle Report (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkstyle-report
+          path: build/reports/checkstyle/main.xml
+
+      - name: Upload PMD Report (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmd-report
+          path: build/reports/pmd/main.xml
