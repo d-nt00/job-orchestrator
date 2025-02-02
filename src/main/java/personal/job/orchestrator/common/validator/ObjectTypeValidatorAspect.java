@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import personal.job.orchestrator.common.annotations.IsAssignableType;
+import personal.job.orchestrator.repository.ColumnIdentity;
 
 import java.lang.reflect.Parameter;
 import java.util.stream.IntStream;
@@ -20,14 +21,18 @@ public class ObjectTypeValidatorAspect {
   @Before("@annotation(isAssignable)")
   public void isAssignable(JoinPoint joinPoint, IsAssignableType isAssignable) {
     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-
+    Object[] args = joinPoint.getArgs();
     String wantedArg = isAssignable.arg();
 
     int wantedTypeIndex = getWantedArgumentIndex(methodSignature, wantedArg);
     int annotatedIndex = getAnnotatedArgumentIndex(methodSignature, wantedArg);
 
-    Class<?> wantedType = methodSignature.getParameterTypes()[wantedTypeIndex];
-    Object target = joinPoint.getArgs()[annotatedIndex];
+    Object target = args[annotatedIndex];
+    Object wantedArgValue = args[wantedTypeIndex];
+
+    Class<?> wantedType = wantedArgValue instanceof ColumnIdentity
+        ? ((ColumnIdentity) wantedArgValue).getType()
+        : methodSignature.getParameterTypes()[wantedTypeIndex];
 
     if (target != null && !ClassUtils.isAssignable(target.getClass(), wantedType)) {
       throw new IllegalArgumentException(
