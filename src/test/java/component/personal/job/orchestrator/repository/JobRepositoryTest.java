@@ -28,10 +28,10 @@ public class JobRepositoryTest {
   @Autowired
   private ConnectionFactory connectionFactory;
 
-  @BeforeEach
-  public void setUp(@Value("classpath:/test-data/insert-test-data.sql") Resource resource) {
-    executeScriptBlocking(resource);
-  }
+//  @BeforeEach
+//  public void setUp(@Value("classpath:/test-data/insert-test-data.sql") Resource resource) {
+//    executeScriptBlocking(resource);
+//  }
 
   private void executeScriptBlocking(Resource sqlScript) {
     Mono.from(connectionFactory.create())
