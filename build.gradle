@@ -2,6 +2,10 @@ import java.time.Duration
 
 plugins {
 	id 'java'
+	id 'pmd'
+
+	// TODO: to re-activate once gradle supports built-in rules
+	id 'checkstyle'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'com.avast.gradle.docker-compose' version '0.17.5'
@@ -51,8 +55,18 @@ tasks.bootRun {
 	systemProperty 'spring.profiles.active', 'local'
 }
 
+pmd {
+	toolVersion = '7.0.0'
+	consoleOutput = true
+}
+
+// TODO: to re-activate once gradle supports built-in rules
+//checkstyle {
+//	toolVersion = '10.12.1'  // Use latest version
+//}
+
 dockerCompose {
-	useComposeFiles = ["src/docker/compose/docker-compose.yml"]
+	useComposeFiles = ['src/docker/compose/docker-compose.yml']
 	waitForTcpPorts = true
 	waitForTcpPortsTimeout = Duration.ofSeconds(120)
 }

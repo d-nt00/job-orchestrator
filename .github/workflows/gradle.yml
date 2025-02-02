@@ -39,8 +39,9 @@ jobs:
       - name: Run PMD
         run: ./gradlew pmdMain
 
-      - name: Run Checkstyle
-        run: ./gradlew checkstyleMain
+# TODO: to re-activate once gradle supports built-in rules
+#      - name: Run Checkstyle
+#        run: ./gradlew checkstyleMain
 
       - name: Close Docker container
         if: always()
