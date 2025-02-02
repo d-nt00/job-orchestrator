@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.r2dbc.connection.init.ScriptUtils;
-import org.springframework.test.context.jdbc.Sql;
 import personal.job.orchestrator.repository.JobRepository;
 import personal.job.orchestrator.repository.dto.JobDto;
 import reactor.core.publisher.Mono;
@@ -20,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ComponentTest
-@Sql
 public class JobRepositoryTest {
 
   @Autowired
