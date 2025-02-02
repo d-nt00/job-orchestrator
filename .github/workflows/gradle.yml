@@ -27,17 +27,24 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Build and Run Checks
-        run: ./gradlew build
+      - name: Clean environment
+        run: ./gradlew clean
 
-      - name: Run Tests
-        run: ./gradlew test
+      - name: Start Docker
+        run: ./gradlew composeUp
+
+      - name: Run Gradlew build
+        run: ./gradlew build
 
       - name: Run PMD
         run: ./gradlew pmdMain
 
       - name: Run Checkstyle
         run: ./gradlew checkstyleMain
+
+      - name: Close Docker container
+        if: always()
+        run: ./gradlew composeDown
 
       - name: Upload Checkstyle Report (if failed)
         if: failure()
