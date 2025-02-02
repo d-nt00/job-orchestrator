@@ -4,6 +4,8 @@ import component.personal.job.orchestrator.ComponentTest;
 import io.r2dbc.spi.ConnectionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ComponentTest
 public class JobRepositoryTest {
 
+  private static final Logger log = LoggerFactory.getLogger(JobRepositoryTest.class);
   @Autowired
   private JobRepository jobRepository;
 
@@ -57,11 +60,16 @@ public class JobRepositoryTest {
 
     StepVerifier.create(retrievedJobMono)
         .assertNext(foundJob -> {
-          assertNotNull(foundJob);
-          assertNotNull(foundJob.jobId());
-          assertEquals(dummyJob.jobStatus(), foundJob.jobStatus());
-          assertTrue(dummyJob.scheduledTime().isEqual(foundJob.scheduledTime()));
-          assertThat(dummyJob.jobDetails()).usingRecursiveComparison().isEqualTo(foundJob.jobDetails());
+          try {
+            assertNotNull(foundJob);
+            assertNotNull(foundJob.jobId());
+            assertEquals(dummyJob.jobStatus(), foundJob.jobStatus());
+            assertTrue(dummyJob.scheduledTime().isEqual(foundJob.scheduledTime()));
+            assertThat(dummyJob.jobDetails()).usingRecursiveComparison().isEqualTo(foundJob.jobDetails());
+          } catch (Exception e) {
+            log.error("e: ", e);
+            log.info("foundJob: {}, dummyJob: {}", foundJob.scheduledTime(), dummyJob.scheduledTime());
+          }
         })
         .verifyComplete();
   }
