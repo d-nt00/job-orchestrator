@@ -17,6 +17,7 @@ import static fixture.personal.job.orchestrator.JobFixtures.getDummyJobDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ComponentTest
 public class JobRepositoryTest {
@@ -59,7 +60,7 @@ public class JobRepositoryTest {
           assertNotNull(foundJob);
           assertNotNull(foundJob.jobId());
           assertEquals(dummyJob.jobStatus(), foundJob.jobStatus());
-          assertEquals(dummyJob.scheduledTime(), foundJob.scheduledTime());
+          assertTrue(dummyJob.scheduledTime().isEqual(foundJob.scheduledTime()));
           assertThat(dummyJob.jobDetails()).usingRecursiveComparison().isEqualTo(foundJob.jobDetails());
         })
         .verifyComplete();
