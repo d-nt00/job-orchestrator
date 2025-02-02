@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -41,14 +41,14 @@ jobs:
 
       - name: Upload Checkstyle Report (if failed)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: checkstyle-report
           path: build/reports/checkstyle/main.xml
 
       - name: Upload PMD Report (if failed)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pmd-report
           path: build/reports/pmd/main.xml
